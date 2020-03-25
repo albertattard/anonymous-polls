@@ -1,7 +1,8 @@
-package com.albertattard.polls
+package com.albertattard.polls.resource
 
 import com.albertattard.polls.model.CreatePoll
 import com.albertattard.polls.model.CreatedPoll
+import com.albertattard.polls.service.PollService
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller

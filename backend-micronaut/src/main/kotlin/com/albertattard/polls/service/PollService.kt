@@ -1,4 +1,4 @@
-package com.albertattard.polls
+package com.albertattard.polls.service
 
 import com.albertattard.polls.model.CreatePoll
 import com.albertattard.polls.model.CreatedPoll

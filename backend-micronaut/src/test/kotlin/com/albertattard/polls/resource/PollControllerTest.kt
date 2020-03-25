@@ -1,9 +1,10 @@
-package com.albertattard.polls
+package com.albertattard.polls.resource
 
 import com.albertattard.polls.model.CreatePoll
 import com.albertattard.polls.model.CreatedPoll
 import com.albertattard.polls.model.Group
 import com.albertattard.polls.model.Question
+import com.albertattard.polls.service.PollService
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import io.micronaut.http.HttpRequest
