@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: anonymous-polls
+  io:
+    watch:
+      paths: src/main
+      restart: true
