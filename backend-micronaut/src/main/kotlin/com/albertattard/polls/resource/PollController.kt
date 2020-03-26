@@ -15,6 +15,6 @@ class PollController internal constructor(
 
     @Post("/create", produces = [MediaType.APPLICATION_JSON])
     fun create(@Body poll: CreatePoll): CreatedPoll {
-        return service.create(poll)
+        return CreatedPoll(service.create(poll))
     }
 }

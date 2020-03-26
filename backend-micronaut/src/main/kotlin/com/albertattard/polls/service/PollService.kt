@@ -1,8 +1,8 @@
 package com.albertattard.polls.service
 
 import com.albertattard.polls.model.CreatePoll
-import com.albertattard.polls.model.CreatedPoll
+import java.util.UUID
 
 interface PollService {
-    fun create(poll: CreatePoll): CreatedPoll
+    fun create(poll: CreatePoll): UUID
 }

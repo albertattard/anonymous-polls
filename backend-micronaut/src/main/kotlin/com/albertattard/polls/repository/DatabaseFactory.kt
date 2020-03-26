@@ -17,7 +17,7 @@ class DatabaseFactory {
     fun database(dataSource: DataSource) =
         Database.connect(dataSource).apply {
             transaction(this) {
-                SchemaUtils.createMissingTablesAndColumns(PollsTable)
+                SchemaUtils.createMissingTablesAndColumns(PollsTable, QuestionsTable, PossibleAnswersTable)
             }
         }
 

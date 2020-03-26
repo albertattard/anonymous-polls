@@ -1,14 +1,13 @@
 package com.albertattard.polls.model
 
+import io.micronaut.core.annotation.Introspected
 import java.util.UUID
 
-data class CreatedPoll private constructor(val link: String) {
+@Introspected
+data class CreatedPoll(val link: String) {
 
     companion object {
         operator fun invoke(id: UUID) =
-                CreatedPoll("/poll/$id")
-
-        fun random() =
-                invoke(UUID.randomUUID())
+            CreatedPoll("/poll/$id")
     }
 }
