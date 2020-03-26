@@ -31,6 +31,7 @@ class ReadPollDefaultServiceTest(
         with(poll.second) {
             result as Poll.Found
             result.caption shouldBe caption
+            result.questions shouldBe questions
         }
     }
 })

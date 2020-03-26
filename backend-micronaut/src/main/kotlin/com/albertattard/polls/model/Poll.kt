@@ -8,6 +8,7 @@ sealed class Poll {
 
     @Introspected
     data class Found(
-        val caption: String
+        val caption: String,
+        val questions: List<Question> = emptyList()
     ) : Poll()
 }

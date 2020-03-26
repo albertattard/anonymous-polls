@@ -46,7 +46,7 @@ class ReadPollControllerTest(
         val pollId = UUID.randomUUID()
         val mock = getMock(service)
 
-        val poll = Poll.Found("Some Poll")
+        val poll = Poll.Found(caption = "Some Poll", questions = emptyList())
         every { mock.read(pollId) } returns poll
 
         val response = client.toBlocking().retrieve(HttpRequest.GET<Any>("/$pollId"), Poll.Found::class.java)

@@ -2,6 +2,8 @@ package com.albertattard.polls.service
 
 import com.albertattard.polls.model.CreatePoll
 import com.albertattard.polls.model.Poll
+import com.albertattard.polls.model.PossibleAnswer
+import com.albertattard.polls.model.Question
 import com.albertattard.polls.repository.PollsTable
 import com.albertattard.polls.repository.PossibleAnswersTable
 import com.albertattard.polls.repository.QuestionsTable
@@ -49,7 +51,29 @@ class PollDefaultService internal constructor(
             PollsTable.select { PollsTable.id eq pollId }
                 .singleOrNull()
                 ?.let { poll ->
-                    Poll.Found(caption = poll[PollsTable.caption])
+                    /* Fetch all possible answers and then group them by question id */
+                    val answersByQuestion = PossibleAnswersTable
+                        .select { PossibleAnswersTable.pollId eq pollId }
+                        .orderBy(PossibleAnswersTable.index)
+                        .map {
+                            it[PossibleAnswersTable.questionId] to PossibleAnswer(text = it[PossibleAnswersTable.possibleAnswer])
+                        }.groupBy({ it.first }, { it.second })
+
+                    val question = QuestionsTable
+                        .select { QuestionsTable.pollId eq pollId }
+                        .orderBy(QuestionsTable.index)
+                        .map {
+                            Question(
+                                text = it[QuestionsTable.question],
+                                /* Retrieve the possible answers with this question id */
+                                possibleAnswers = answersByQuestion[it[QuestionsTable.id].value] ?: emptyList()
+                            )
+                        }
+
+                    Poll.Found(
+                        caption = poll[PollsTable.caption],
+                        questions = question
+                    )
                 } ?: Poll.NotFound
         }
 }
