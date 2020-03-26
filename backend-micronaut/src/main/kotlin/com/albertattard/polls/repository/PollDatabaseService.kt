@@ -10,6 +10,7 @@ import com.albertattard.polls.service.PollService
 import java.util.UUID
 import javax.inject.Singleton
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
@@ -90,7 +91,17 @@ class PollDatabaseService internal constructor(
                 } ?: Poll.NotFound
         }
 
-    override fun delete(adminId: UUID): PollDelete {
-        TODO("Remember to write a test first!!")
-    }
+    override fun delete(deleteId: UUID): PollDelete =
+        transaction(database) {
+            PossibleAnswersTable.deleteWhere { PossibleAnswersTable.deleteId eq deleteId }
+            QuestionsTable.deleteWhere { QuestionsTable.deleteId eq deleteId }
+            val deletedPolls = PollsTable.deleteWhere { PollsTable.deleteId eq deleteId }
+
+            if (deletedPolls != 1) {
+                rollback()
+                PollDelete.NotFound
+            } else {
+                PollDelete.Deleted
+            }
+        }
 }

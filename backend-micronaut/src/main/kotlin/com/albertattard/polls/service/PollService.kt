@@ -10,7 +10,7 @@ interface PollService {
 
     fun create(poll: CreatePoll): CreatedPollIds
 
-    fun read(pollId: UUID): Poll
+    fun read(readId: UUID): Poll
 
-    fun delete(adminId: UUID): PollDelete
+    fun delete(deleteId: UUID): PollDelete
 }

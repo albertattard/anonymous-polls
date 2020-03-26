@@ -8,6 +8,7 @@ import com.albertattard.polls.repository.QuestionsTable
 import java.util.UUID
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.andWhere
+import org.jetbrains.exposed.sql.count
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
@@ -138,4 +139,13 @@ object DatabaseHelper {
         val pollId = createPoll(database, poll)
         return pollId to poll
     }
+
+    fun countPoll(database: Database, readId: UUID): Int =
+        transaction(database) {
+            val count = PollsTable.id.count()
+            PollsTable.slice(count)
+                .select { PollsTable.readId eq readId }
+                .single()
+                .let { it[count] }
+        }
 }

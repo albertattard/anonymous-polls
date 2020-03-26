@@ -13,7 +13,7 @@ import org.jetbrains.exposed.sql.Database
 class ReadPollDatabaseServiceTest(
     private val database: Database
 ) : StringSpec({
-    "should read the poll not found when no poll with the given poll id is found" {
+    "should return not found when no poll with the given readId is found" {
         DatabaseHelper.emptyDatabase(database)
         val service = PollDatabaseService(database)
 
@@ -21,7 +21,7 @@ class ReadPollDatabaseServiceTest(
         result shouldBe Poll.NotFound
     }
 
-    "should read the poll when the poll with the given poll id is found" {
+    "should return the poll with the given readId" {
         val poll = DatabaseHelper.createRandomPoll(database)
         val service = PollDatabaseService(database)
 
