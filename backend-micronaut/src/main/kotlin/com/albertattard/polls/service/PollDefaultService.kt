@@ -10,6 +10,7 @@ import javax.inject.Singleton
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Singleton
@@ -32,6 +33,7 @@ class PollDefaultService internal constructor(
 
                 question.possibleAnswers.forEachIndexed { answerIndex, possibleAnswer ->
                     PossibleAnswersTable.insert {
+                        it[PossibleAnswersTable.pollId] = pollId
                         it[PossibleAnswersTable.questionId] = questionId
                         it[PossibleAnswersTable.index] = answerIndex
                         it[PossibleAnswersTable.possibleAnswer] = possibleAnswer.text
@@ -42,7 +44,12 @@ class PollDefaultService internal constructor(
             pollId
         }
 
-    override fun read(pollId: UUID): Poll {
-        return Poll.NotFound
-    }
+    override fun read(pollId: UUID): Poll =
+        transaction(database) {
+            PollsTable.select { PollsTable.id eq pollId }
+                .singleOrNull()
+                ?.let { poll ->
+                    Poll.Found(caption = poll[PollsTable.caption])
+                } ?: Poll.NotFound
+        }
 }

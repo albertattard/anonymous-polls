@@ -23,11 +23,16 @@ class CreatePollDefaultServiceTest(
 
         create.questions.forEachIndexed { questionIndex, question ->
             val questionId = DatabaseHelper.withQuestion(database, pollId, questionIndex) {
+                it["pollId"] shouldBe pollId
+                it["index"] shouldBe questionIndex
                 it["question"] shouldBe question.text
             }
 
             question.possibleAnswers.forEachIndexed { answerIndex, possibleAnswer ->
                 DatabaseHelper.withPossibleAnswer(database, questionId, answerIndex) {
+                    it["pollId"] shouldBe pollId
+                    it["questionId"] shouldBe questionId
+                    it["index"] shouldBe answerIndex
                     it["possibleAnswer"] shouldBe possibleAnswer.text
                 }
             }
