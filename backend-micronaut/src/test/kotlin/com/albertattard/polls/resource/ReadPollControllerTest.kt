@@ -3,10 +3,12 @@ package com.albertattard.polls.resource
 import com.albertattard.polls.model.Poll
 import com.albertattard.polls.service.PollService
 import io.kotlintest.shouldBe
+import io.kotlintest.shouldThrow
 import io.kotlintest.specs.StringSpec
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.test.annotation.MicronautTest
 import io.micronaut.test.annotation.MockBean
 import io.micronaut.test.extensions.kotlintest.MicronautKotlinTestExtension.getMock
@@ -21,14 +23,16 @@ class ReadPollControllerTest(
     private val service: PollService,
     @Client("/poll") private val client: RxHttpClient
 ) : StringSpec({
-    "!should return 404 when the requested poll is not found" {
+    "should return 404 when the requested poll is not found" {
         val pollId = UUID.randomUUID()
         val mock = getMock(service)
 
         every { mock.read(pollId) } returns Poll.NotFound
 
-        val response = client.toBlocking().exchange(HttpRequest.GET<Any>("/$pollId"), String::class.java)
-        response.code() shouldBe 404
+        val exception = shouldThrow<HttpClientResponseException> {
+            client.toBlocking().retrieve(HttpRequest.GET<Any>("/$pollId"))
+        }
+        exception.status.code shouldBe 404
 
         verify(exactly = 1) { mock.read(pollId) }
 
