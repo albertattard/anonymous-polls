@@ -2,6 +2,7 @@ package com.albertattard.polls.service
 
 import com.albertattard.polls.model.CreatePoll
 import com.albertattard.polls.repository.PollsTable
+import com.albertattard.polls.repository.PossibleAnswersTable
 import com.albertattard.polls.repository.QuestionsTable
 import javax.inject.Singleton
 import org.jetbrains.exposed.sql.Database
@@ -20,11 +21,19 @@ class DefaultPollService internal constructor(
                 it[caption] = poll.caption
             }.value
 
-            poll.questions.forEachIndexed { index, question ->
-                QuestionsTable.insert {
+            poll.questions.forEachIndexed { questionIndex, question ->
+                val questionId = QuestionsTable.insertAndGetId {
                     it[QuestionsTable.pollId] = pollId
-                    it[QuestionsTable.index] = index
-                    it[QuestionsTable.question] = question.question
+                    it[QuestionsTable.index] = questionIndex
+                    it[QuestionsTable.question] = question.text
+                }.value
+
+                question.possibleAnswers.forEachIndexed { answerIndex, possibleAnswer ->
+                    PossibleAnswersTable.insert {
+                        it[PossibleAnswersTable.questionId] = questionId
+                        it[PossibleAnswersTable.index] = answerIndex
+                        it[PossibleAnswersTable.possibleAnswer] = possibleAnswer.text
+                    }
                 }
             }
 

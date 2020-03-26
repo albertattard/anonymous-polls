@@ -11,7 +11,7 @@ object CreatePollHelper {
             caption = "Sample Poll",
             questions = listOf(
                 Question(
-                    question = "Sample Question 1", possibleAnswers = listOf(
+                    text = "Sample Question 1", possibleAnswers = listOf(
                         PossibleAnswer("Sample answer 1"),
                         PossibleAnswer("Sample answer 2")
                     )

@@ -1,6 +1,7 @@
 package com.albertattard.polls.helpers
 
 import com.albertattard.polls.repository.PollsTable
+import com.albertattard.polls.repository.PossibleAnswersTable
 import com.albertattard.polls.repository.QuestionsTable
 import java.util.UUID
 import org.jetbrains.exposed.sql.Database
@@ -37,11 +38,36 @@ object DatabaseHelper {
                 } ?: emptyMap()
         }
 
-    fun withPoll(database: Database, pollId: UUID, block: (Map<String, Any>) -> Unit) {
-        block.invoke(readPoll(database, pollId))
-    }
+    private fun readPossibleAnswer(database: Database, questionId: Long, index: Int): Map<String, Any> =
+        transaction(database) {
+            PossibleAnswersTable.select { PossibleAnswersTable.questionId eq questionId }
+                .andWhere { PossibleAnswersTable.index eq index }
+                .singleOrNull()
+                ?.let {
+                    mapOf(
+                        "id" to it[PossibleAnswersTable.id].value,
+                        "questionId" to it[PossibleAnswersTable.questionId],
+                        "index" to it[PossibleAnswersTable.index],
+                        "possibleAnswer" to it[PossibleAnswersTable.possibleAnswer]
+                    )
+                } ?: emptyMap()
+        }
 
-    fun withQuestion(database: Database, pollId: UUID, index: Int, block: (Map<String, Any>) -> Unit) {
-        block.invoke(readQuestion(database, pollId, index))
-    }
+    fun withPoll(database: Database, pollId: UUID, block: (Map<String, Any>) -> Unit) =
+        readPoll(database, pollId).let {
+            block(it)
+            it["id"] as UUID
+        }
+
+    fun withQuestion(database: Database, pollId: UUID, index: Int, block: (Map<String, Any>) -> Unit) =
+        readQuestion(database, pollId, index).let {
+            block(it)
+            it["id"] as Long
+        }
+
+    fun withPossibleAnswer(database: Database, questionId: Long, index: Int, block: (Map<String, Any>) -> Unit) =
+        readPossibleAnswer(database, questionId, index).let {
+            block(it)
+            it["id"] as Long
+        }
 }
