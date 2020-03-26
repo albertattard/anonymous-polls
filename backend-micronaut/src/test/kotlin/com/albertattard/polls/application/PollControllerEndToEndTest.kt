@@ -20,7 +20,7 @@ class PollControllerEndToEndTest(
         println("Created: ${response.body()}")
         val created = response.body()
         created shouldNotBe null
-        created?.link shouldNotBe null
-        created?.link shouldMatch "/poll/[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}"
+        created?.readLink shouldNotBe null
+        created?.readLink shouldMatch "/poll/[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}"
     }
 })

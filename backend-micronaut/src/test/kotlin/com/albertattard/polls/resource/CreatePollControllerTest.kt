@@ -2,6 +2,7 @@ package com.albertattard.polls.resource
 
 import com.albertattard.polls.helpers.CreatePollHelper
 import com.albertattard.polls.model.CreatedPoll
+import com.albertattard.polls.model.CreatedPollIds
 import com.albertattard.polls.service.PollService
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
@@ -26,9 +27,13 @@ class CreatePollControllerTest(
         val mock = getMock(service)
 
         val create = CreatePollHelper.sample()
-        val pollId = UUID.randomUUID()
-        val created = CreatedPoll(pollId)
-        every { mock.create(create) } returns pollId
+        val pollIds = CreatedPollIds(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID())
+        val created = CreatedPoll(
+            readLink = "/poll/${pollIds.readId}",
+            editLink = "/poll/${pollIds.editId}/edit",
+            deleteLink = "/poll/${pollIds.deleteId}"
+        )
+        every { mock.create(create) } returns pollIds
 
         val response = client.toBlocking().exchange(HttpRequest.POST("/create", create), CreatedPoll::class.java)
         response.body() shouldBe created

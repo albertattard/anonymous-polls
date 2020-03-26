@@ -1,12 +1,12 @@
-package com.albertattard.polls.service
+package com.albertattard.polls.repository
 
 import com.albertattard.polls.model.CreatePoll
+import com.albertattard.polls.model.CreatedPollIds
 import com.albertattard.polls.model.Poll
+import com.albertattard.polls.model.PollDelete
 import com.albertattard.polls.model.PossibleAnswer
 import com.albertattard.polls.model.Question
-import com.albertattard.polls.repository.PollsTable
-import com.albertattard.polls.repository.PossibleAnswersTable
-import com.albertattard.polls.repository.QuestionsTable
+import com.albertattard.polls.service.PollService
 import java.util.UUID
 import javax.inject.Singleton
 import org.jetbrains.exposed.sql.Database
@@ -16,19 +16,29 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Singleton
-class PollDefaultService internal constructor(
+class PollDatabaseService internal constructor(
     private var database: Database
 ) : PollService {
 
     override fun create(poll: CreatePoll) =
         transaction(database) {
+            var readId = UUID.randomUUID()
+            var editId = UUID.randomUUID()
+            var deleteId = UUID.randomUUID()
+
             val pollId = PollsTable.insertAndGetId {
-                it[caption] = poll.caption
+                it[PollsTable.readId] = readId
+                it[PollsTable.editId] = editId
+                it[PollsTable.deleteId] = deleteId
+                it[PollsTable.caption] = poll.caption
             }.value
 
             poll.questions.forEachIndexed { questionIndex, question ->
                 val questionId = QuestionsTable.insertAndGetId {
                     it[QuestionsTable.pollId] = pollId
+                    it[QuestionsTable.readId] = readId
+                    it[QuestionsTable.editId] = editId
+                    it[QuestionsTable.deleteId] = deleteId
                     it[QuestionsTable.index] = questionIndex
                     it[QuestionsTable.question] = question.text
                 }.value
@@ -36,6 +46,9 @@ class PollDefaultService internal constructor(
                 question.possibleAnswers.forEachIndexed { answerIndex, possibleAnswer ->
                     PossibleAnswersTable.insert {
                         it[PossibleAnswersTable.pollId] = pollId
+                        it[PossibleAnswersTable.readId] = readId
+                        it[PossibleAnswersTable.editId] = editId
+                        it[PossibleAnswersTable.deleteId] = deleteId
                         it[PossibleAnswersTable.questionId] = questionId
                         it[PossibleAnswersTable.index] = answerIndex
                         it[PossibleAnswersTable.possibleAnswer] = possibleAnswer.text
@@ -43,24 +56,24 @@ class PollDefaultService internal constructor(
                 }
             }
 
-            pollId
+            CreatedPollIds(readId = readId, editId = editId, deleteId = deleteId)
         }
 
-    override fun read(pollId: UUID): Poll =
+    override fun read(readId: UUID): Poll =
         transaction(database) {
-            PollsTable.select { PollsTable.id eq pollId }
+            PollsTable.select { PollsTable.readId eq readId }
                 .singleOrNull()
                 ?.let { poll ->
                     /* Fetch all possible answers and then group them by question id */
                     val answersByQuestion = PossibleAnswersTable
-                        .select { PossibleAnswersTable.pollId eq pollId }
+                        .select { PossibleAnswersTable.readId eq readId }
                         .orderBy(PossibleAnswersTable.index)
                         .map {
                             it[PossibleAnswersTable.questionId] to PossibleAnswer(text = it[PossibleAnswersTable.possibleAnswer])
                         }.groupBy({ it.first }, { it.second })
 
                     val question = QuestionsTable
-                        .select { QuestionsTable.pollId eq pollId }
+                        .select { QuestionsTable.readId eq readId }
                         .orderBy(QuestionsTable.index)
                         .map {
                             Question(
@@ -76,4 +89,8 @@ class PollDefaultService internal constructor(
                     )
                 } ?: Poll.NotFound
         }
+
+    override fun delete(adminId: UUID): PollDelete {
+        TODO("Remember to write a test first!!")
+    }
 }

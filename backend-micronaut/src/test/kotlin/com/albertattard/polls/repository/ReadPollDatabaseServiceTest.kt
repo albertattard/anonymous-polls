@@ -1,4 +1,4 @@
-package com.albertattard.polls.service
+package com.albertattard.polls.repository
 
 import com.albertattard.polls.helpers.DatabaseHelper
 import com.albertattard.polls.model.Poll
@@ -10,12 +10,12 @@ import java.util.UUID
 import org.jetbrains.exposed.sql.Database
 
 @MicronautTest
-class ReadPollDefaultServiceTest(
+class ReadPollDatabaseServiceTest(
     private val database: Database
 ) : StringSpec({
     "should read the poll not found when no poll with the given poll id is found" {
         DatabaseHelper.emptyDatabase(database)
-        val service = PollDefaultService(database)
+        val service = PollDatabaseService(database)
 
         val result = service.read(UUID.randomUUID())
         result shouldBe Poll.NotFound
@@ -23,9 +23,9 @@ class ReadPollDefaultServiceTest(
 
     "should read the poll when the poll with the given poll id is found" {
         val poll = DatabaseHelper.createRandomPoll(database)
-        val service = PollDefaultService(database)
+        val service = PollDatabaseService(database)
 
-        val result = service.read(poll.first)
+        val result = service.read(poll.first.readId)
         result.shouldBeInstanceOf<Poll.Found>()
 
         with(poll.second) {
