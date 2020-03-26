@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Factory
+import java.util.UUID
 import javax.sql.DataSource
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -23,12 +24,12 @@ class DatabaseFactory {
     @Bean
     fun dataSource(): DataSource {
         val config = HikariConfig()
-        config.jdbcUrl = "jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+        /* Use a random database name */
+        config.jdbcUrl = "jdbc:h2:mem:${UUID.randomUUID()};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
         config.driverClassName = "org.h2.Driver"
         config.username = "poll-user"
-        config.password = "poll-password"
-        /* Tests that need to access the DB will fail due to wrong password.  Need to re-enable this */
-        // config.password = UUID.randomUUID().toString()
+        /* Use a random database password */
+        config.password = "${UUID.randomUUID()}"
         return HikariDataSource(config)
     }
 }
