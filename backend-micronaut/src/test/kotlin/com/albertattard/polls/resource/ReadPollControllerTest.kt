@@ -41,6 +41,24 @@ class ReadPollControllerTest(
         verify(exactly = 1) { mock.toString() }
         confirmVerified(mock)
     }
+
+    "should return the poll when the requested poll is found" {
+        val pollId = UUID.randomUUID()
+        val mock = getMock(service)
+
+        val poll = Poll.Found("Some Poll")
+        every { mock.read(pollId) } returns poll
+
+        val response = client.toBlocking().retrieve(HttpRequest.GET<Any>("/$pollId"), Poll.Found::class.java)
+        response shouldBe poll
+
+        verify(exactly = 1) { mock.read(pollId) }
+
+        /* TODO: check why this needs to be verified */
+        verify(exactly = 2) { mock.hashCode() }
+        verify(exactly = 1) { mock.toString() }
+        confirmVerified(mock)
+    }
 }) {
     @MockBean(PollService::class)
     fun pollService(): PollService {
