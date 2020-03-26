@@ -1,9 +1,11 @@
 package com.albertattard.polls.service
 
 import com.albertattard.polls.model.CreatePoll
+import com.albertattard.polls.model.Poll
 import com.albertattard.polls.repository.PollsTable
 import com.albertattard.polls.repository.PossibleAnswersTable
 import com.albertattard.polls.repository.QuestionsTable
+import java.util.UUID
 import javax.inject.Singleton
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.insert
@@ -39,4 +41,9 @@ class DefaultPollService internal constructor(
 
             pollId
         }
+
+    override fun read(pollId: UUID): Poll {
+        // TODO("Remember to write a test first!!")
+        return Poll.NotFound
+    }
 }
