@@ -13,7 +13,7 @@ import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Singleton
-class DefaultPollService internal constructor(
+class PollDefaultService internal constructor(
     private var database: Database
 ) : PollService {
 
@@ -43,7 +43,6 @@ class DefaultPollService internal constructor(
         }
 
     override fun read(pollId: UUID): Poll {
-        // TODO("Remember to write a test first!!")
         return Poll.NotFound
     }
 }

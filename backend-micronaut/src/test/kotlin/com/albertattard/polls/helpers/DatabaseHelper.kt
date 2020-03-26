@@ -6,6 +6,7 @@ import com.albertattard.polls.repository.QuestionsTable
 import java.util.UUID
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.andWhere
+import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -70,4 +71,12 @@ object DatabaseHelper {
             block(it)
             it["id"] as Long
         }
+
+    fun emptyDatabase(database: Database) {
+        transaction(database) {
+            PossibleAnswersTable.deleteAll()
+            QuestionsTable.deleteAll()
+            PollsTable.deleteAll()
+        }
+    }
 }
