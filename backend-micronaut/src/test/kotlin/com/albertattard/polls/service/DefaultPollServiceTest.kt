@@ -36,9 +36,13 @@ class DefaultPollServiceTest(
                 .andWhere { PollsTable.id eq id }
                 .singleOrNull()
                 ?.let {
-                    mapOf("id" to it[PollsTable.id].value)
+                    mapOf(
+                        "id" to it[PollsTable.id].value,
+                        "caption" to it[PollsTable.caption]
+                    )
                 } ?: emptyMap()
         }
         inDb["id"] shouldBe id
+        inDb["caption"] shouldBe create.caption
     }
 })

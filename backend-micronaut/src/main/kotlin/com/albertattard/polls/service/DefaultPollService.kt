@@ -16,6 +16,7 @@ class DefaultPollService internal constructor(
     override fun create(poll: CreatePoll) =
         transaction(database) {
             val id = PollsTable.insertAndGetId {
+                it[caption] = poll.caption
             }
             CreatedPoll(id = id.value)
         }

@@ -22,14 +22,15 @@ class DatabaseFactory {
         }
 
     @Bean
-    fun dataSource(): DataSource {
-        val config = HikariConfig()
-        /* Use a random database name */
-        config.jdbcUrl = "jdbc:h2:mem:${UUID.randomUUID()};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
-        config.driverClassName = "org.h2.Driver"
-        config.username = "poll-user"
-        /* Use a random database password */
-        config.password = "${UUID.randomUUID()}"
-        return HikariDataSource(config)
-    }
+    fun dataSource(): DataSource =
+        HikariConfig().apply {
+            /* Use a random database name */
+            jdbcUrl = "jdbc:h2:mem:${UUID.randomUUID()};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+            driverClassName = "org.h2.Driver"
+            username = "poll-user"
+            /* Use a random database password */
+            password = "${UUID.randomUUID()}"
+        }.let {
+            HikariDataSource(it)
+        }
 }
