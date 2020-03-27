@@ -49,6 +49,10 @@ tasks {
     }
 }
 
+sourceSets.getByName("main") {
+    resources.srcDirs("src/main/resources", "generated/main/resources")
+}
+
 application {
     mainClassName = "com.albertattard.polls.Application"
 }
