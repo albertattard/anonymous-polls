@@ -1,5 +1,6 @@
 import { css, html, LitElement } from 'lit-element';
 import { openWcLogo } from './open-wc-logo.js';
+import { PollGateway } from './poll-gateway.js';
 
 export class AnonymousPoll extends LitElement {
   static get properties() {
@@ -60,28 +61,24 @@ export class AnonymousPoll extends LitElement {
   constructor() {
     super();
     this.numberOfPolls = 'Pending...';
+    this.gateway = new PollGateway();
   }
 
   connectedCallback() {
     super.connectedCallback();
+    this.updateNumberOfPolls();
+  }
 
-    fetch('/poll/count')
-      .then(response => {
-        if (response.status === 200) {
-          return response.json();
-        }
-
-        return { total: -1 };
-      })
-      .then(data => {
-        if (data.total === 0) {
-          this.numberOfPolls = 'No polls found!!';
-        } else if (data.total > 0) {
-          this.numberOfPolls = `Number of polls ${data.total}`;
-        } else {
-          this.numberOfPolls = 'Failed to retrieve the number of polls';
-        }
-      });
+  updateNumberOfPolls() {
+    this.gateway.count().then(data => {
+      if (data.total === 0) {
+        this.numberOfPolls = 'No polls found!!';
+      } else if (data.total > 0) {
+        this.numberOfPolls = `Number of polls ${data.total}`;
+      } else {
+        this.numberOfPolls = 'Failed to retrieve the number of polls';
+      }
+    });
   }
 
   render() {
@@ -89,8 +86,8 @@ export class AnonymousPoll extends LitElement {
       <main>
         <div class="logo">${openWcLogo}</div>
         <h1>Anonymous Polls</h1>
-        <span>Coming soon to a browser close to you</span>
-        <span>${this.numberOfPolls}</span>
+        <span class="coming-soon">Coming soon to a browser close to you</span>
+        <span class="count">${this.numberOfPolls}</span>
       </main>
 
       <p class="app-footer">

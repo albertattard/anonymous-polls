@@ -50,12 +50,13 @@
     ]
   },
   "name": "anonymous-poll",
-  "version": "0.0.0",
-  "description": "Webcomponent anonymous-poll following open-wc recommendations",
+  "version": "1.0.0",
+  "description": "Anonymous Poll",
   "author": "anonymous-poll",
   "license": "MIT",
   "dependencies": {
+    "lit-element": "^2.0.1",
     "lit-html": "^1.0.0",
-    "lit-element": "^2.0.1"
+    "sinon": "^9.0.1"
   }
 }
