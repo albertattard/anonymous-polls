@@ -61,6 +61,8 @@ export class AnonymousPoll extends LitElement {
   constructor() {
     super();
     this.numberOfPolls = 'Pending...';
+
+    /* TODO: Pass this as a parameter so that we can mock it for tests */
     this.gateway = new PollGateway();
   }
 
@@ -70,13 +72,13 @@ export class AnonymousPoll extends LitElement {
   }
 
   updateNumberOfPolls() {
-    this.gateway.count().then(data => {
-      if (data.total === 0) {
-        this.numberOfPolls = 'No polls found!!';
-      } else if (data.total > 0) {
-        this.numberOfPolls = `Number of polls ${data.total}`;
-      } else {
+    this.gateway.count().then(count => {
+      if (count.error) {
         this.numberOfPolls = 'Failed to retrieve the number of polls';
+      } else if (count.total === 0) {
+        this.numberOfPolls = 'No polls found!!';
+      } else {
+        this.numberOfPolls = `Number of polls ${count.total}`;
       }
     });
   }

@@ -13,7 +13,7 @@ export class PollGateway {
         return response.json();
       }
 
-      return { total: -1 };
+      return { error: true };
     });
   }
 }

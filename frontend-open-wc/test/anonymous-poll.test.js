@@ -20,9 +20,9 @@ describe('Anonymous Poll', () => {
     await expect(element).shadowDom.to.be.accessible();
   });
 
-  it('displays an error when total is less than 0', async () => {
+  it('displays an error when there is an error', async () => {
     element.gateway.count = sinon.stub();
-    element.gateway.count.resolves({ total: -1 });
+    element.gateway.count.resolves({ error: true });
 
     await element.updateNumberOfPolls();
 

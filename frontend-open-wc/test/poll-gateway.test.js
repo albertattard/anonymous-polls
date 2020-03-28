@@ -18,11 +18,12 @@ describe('Anonymous Poll', () => {
 
     const count = await gateway.count();
 
+    expect(count.false).to.be.undefined;
     expect(count.total).to.equal(42);
     expect(gateway.get.calledWith('count')).to.be.true;
   });
 
-  it('should return -1 when a non 200 response is received', async () => {
+  it('should return error when a non 200 response is received', async () => {
     const response = {
       status: 404,
     };
@@ -33,7 +34,7 @@ describe('Anonymous Poll', () => {
 
     const count = await gateway.count();
 
-    expect(count.total).to.equal(-1);
+    expect(count.error).to.be.true;
     expect(gateway.get.calledWith('count')).to.be.true;
   });
 });
