@@ -53,6 +53,10 @@ export class AnonymousPoll extends LitElement {
     `;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
   render() {
     return html`
       <main>

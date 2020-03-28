@@ -3,25 +3,27 @@ package com.albertattard.polls.repository
 import com.albertattard.polls.model.CreatePoll
 import com.albertattard.polls.model.CreatedPollIds
 import com.albertattard.polls.model.Poll
+import com.albertattard.polls.model.PollCount
 import com.albertattard.polls.model.PollDelete
 import com.albertattard.polls.model.PossibleAnswer
 import com.albertattard.polls.model.Question
 import com.albertattard.polls.service.PollService
-import java.util.UUID
-import javax.inject.Singleton
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.UUID
+import javax.inject.Singleton
 
 @Singleton
 class PollDatabaseService internal constructor(
     private var database: Database
 ) : PollService {
 
-    override fun create(poll: CreatePoll) =
+    override fun create(poll: CreatePoll): CreatedPollIds =
         transaction(database) {
             var readId = UUID.randomUUID()
             var editId = UUID.randomUUID()
@@ -103,5 +105,11 @@ class PollDatabaseService internal constructor(
             } else {
                 PollDelete.Deleted
             }
+        }
+
+    override fun count(): PollCount =
+        transaction(database) {
+            val total = PollsTable.selectAll().count()
+            PollCount(total)
         }
 }

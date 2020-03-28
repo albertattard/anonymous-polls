@@ -3,6 +3,7 @@ package com.albertattard.polls.resource
 import com.albertattard.polls.model.CreatePoll
 import com.albertattard.polls.model.CreatedPoll
 import com.albertattard.polls.model.Poll
+import com.albertattard.polls.model.PollCount
 import com.albertattard.polls.model.PollDelete
 import com.albertattard.polls.service.PollService
 import io.micronaut.http.HttpResponse
@@ -18,6 +19,10 @@ import java.util.UUID
 class PollController internal constructor(
     private var service: PollService
 ) {
+    @Get("/count", produces = [MediaType.APPLICATION_JSON])
+    fun count(): HttpResponse<PollCount> =
+        HttpResponse.ok(service.count())
+
     @Get("/{pollId}", produces = [MediaType.APPLICATION_JSON])
     fun read(pollId: UUID): HttpResponse<Poll.Found> =
         when (val read = service.read(pollId)) {
