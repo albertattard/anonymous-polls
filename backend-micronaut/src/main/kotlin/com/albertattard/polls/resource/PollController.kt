@@ -23,14 +23,14 @@ class PollController internal constructor(
     fun count(): HttpResponse<PollCount> =
         HttpResponse.ok(service.count())
 
-    @Get("/{pollId}", produces = [MediaType.APPLICATION_JSON])
+    @Get("/read/{pollId}", produces = [MediaType.APPLICATION_JSON])
     fun read(pollId: UUID): HttpResponse<Poll.Found> =
         when (val read = service.read(pollId)) {
             is Poll.Found -> HttpResponse.ok(read)
             else -> HttpResponse.notFound()
         }
 
-    @Delete("/{adminId}", produces = [MediaType.APPLICATION_JSON])
+    @Delete("/delete/{adminId}", produces = [MediaType.APPLICATION_JSON])
     fun delete(adminId: UUID): HttpResponse<PollDelete> =
         when (service.delete(adminId)) {
             is PollDelete.Deleted -> HttpResponse.noContent()
@@ -42,9 +42,9 @@ class PollController internal constructor(
         service.create(poll)
             .let {
                 CreatedPoll(
-                    readLink = "/poll/${it.readId}",
-                    editLink = "/poll/${it.editId}/edit",
-                    deleteLink = "/poll/${it.deleteId}"
+                    readLink = "/poll/read/${it.readId}",
+                    editLink = "/poll/edit/${it.editId}",
+                    deleteLink = "/poll/delete/${it.deleteId}"
                 )
             }
 }

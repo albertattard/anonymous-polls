@@ -21,7 +21,7 @@ import java.util.UUID
 @MicronautTest
 class DeletePollControllerTest(
     private val service: PollService,
-    @Client("/poll") private val client: RxHttpClient
+    @Client("/poll/delete") private val client: RxHttpClient
 ) : StringSpec({
     "should return 404 when deleting a poll that does not exists" {
         val adminId = UUID.randomUUID()

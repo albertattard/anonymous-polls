@@ -22,7 +22,7 @@ import java.util.UUID
 @MicronautTest
 class CountPollControllerTest(
     private val service: PollService,
-    @Client("/poll") private val client: RxHttpClient
+    @Client("/poll/count") private val client: RxHttpClient
 ) : StringSpec({
     "should return the number of polls" {
         val mock = getMock(service)
@@ -30,7 +30,7 @@ class CountPollControllerTest(
         val count = PollCount(42)
         every { mock.count() } returns count
 
-        val response = client.toBlocking().retrieve(HttpRequest.GET<Any>("/count"), PollCount::class.java)
+        val response = client.toBlocking().retrieve(HttpRequest.GET<Any>("/"), PollCount::class.java)
         response shouldBe count
 
         verify(exactly = 1) { mock.count() }

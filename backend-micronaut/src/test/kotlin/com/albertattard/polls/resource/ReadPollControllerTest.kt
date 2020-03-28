@@ -21,7 +21,7 @@ import java.util.UUID
 @MicronautTest
 class ReadPollControllerTest(
     private val service: PollService,
-    @Client("/poll") private val client: RxHttpClient
+    @Client("/poll/read") private val client: RxHttpClient
 ) : StringSpec({
     "should return 404 when the requested poll is not found" {
         val pollId = UUID.randomUUID()

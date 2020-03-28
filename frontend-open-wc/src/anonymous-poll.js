@@ -1,11 +1,10 @@
-import { LitElement, html, css } from 'lit-element';
+import { css, html, LitElement } from 'lit-element';
 import { openWcLogo } from './open-wc-logo.js';
 
 export class AnonymousPoll extends LitElement {
   static get properties() {
     return {
-      title: { type: String },
-      page: { type: String },
+      numberOfPolls: { type: String },
     };
   }
 
@@ -26,6 +25,11 @@ export class AnonymousPoll extends LitElement {
 
       main {
         flex-grow: 1;
+      }
+
+      main span {
+        margin: 12px;
+        display: block;
       }
 
       .logo > svg {
@@ -53,8 +57,31 @@ export class AnonymousPoll extends LitElement {
     `;
   }
 
+  constructor() {
+    super();
+    this.numberOfPolls = 'Pending...';
+  }
+
   connectedCallback() {
     super.connectedCallback();
+
+    fetch('/poll/count')
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+
+        return { total: -1 };
+      })
+      .then(data => {
+        if (data.total === 0) {
+          this.numberOfPolls = 'No polls found!!';
+        } else if (data.total > 0) {
+          this.numberOfPolls = `Number of polls ${data.total}`;
+        } else {
+          this.numberOfPolls = 'Failed to retrieve the number of polls';
+        }
+      });
   }
 
   render() {
@@ -62,7 +89,8 @@ export class AnonymousPoll extends LitElement {
       <main>
         <div class="logo">${openWcLogo}</div>
         <h1>Anonymous Polls</h1>
-        Coming soon to a browser close to you
+        <span>Coming soon to a browser close to you</span>
+        <span>${this.numberOfPolls}</span>
       </main>
 
       <p class="app-footer">

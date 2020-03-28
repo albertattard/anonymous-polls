@@ -10,14 +10,20 @@ node {
   download = true
 }
 
-task("npm-start", NpmTask::class) {
-  group = "Application"
-  description = "Run the frontend application in development mode"
-  setNpmCommand("run-script", "start")
+task("clean", NpmTask::class) {
+  group = "clean"
+  description = "Clean the frontend application"
+  setNpmCommand("run-script", "clean")
 }
 
-task("npm-build", NpmTask::class) {
+task("build", NpmTask::class) {
   group = "build"
   description = "Build the frontend application"
   setNpmCommand("run-script", "build")
+}
+
+task("test", NpmTask::class) {
+  group = "test"
+  description = "Test the frontend application"
+  setNpmCommand("run-script", "test")
 }
