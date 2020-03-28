@@ -28,4 +28,22 @@ describe('Anonymous Poll', () => {
 
     expect(element.numberOfPolls).to.equal('Failed to retrieve the number of polls');
   });
+
+  it('displays a custom message when total is 0', async () => {
+    element.gateway.count = sinon.stub();
+    element.gateway.count.resolves({ total: 0 });
+
+    await element.updateNumberOfPolls();
+
+    expect(element.numberOfPolls).to.equal('No polls found!!');
+  });
+
+  it('displays the number of polls when total is greater than 0', async () => {
+    element.gateway.count = sinon.stub();
+    element.gateway.count.resolves({ total: 10 });
+
+    await element.updateNumberOfPolls();
+
+    expect(element.numberOfPolls).to.equal('Number of polls 10');
+  });
 });

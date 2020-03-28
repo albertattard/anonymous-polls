@@ -3,8 +3,12 @@ export class PollGateway {
     this.basePath = '/poll';
   }
 
+  get(path) {
+    return fetch(`${this.basePath}/${path}`);
+  }
+
   count() {
-    return fetch(`${this.basePath}/count`).then(response => {
+    return this.get('count').then(response => {
       if (response.status === 200) {
         return response.json();
       }
