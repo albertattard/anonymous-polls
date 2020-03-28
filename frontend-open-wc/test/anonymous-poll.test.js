@@ -1,6 +1,5 @@
 import { html, fixture, expect } from '@open-wc/testing';
-
-import '../src/AnonymousPoll.js';
+import '../src/anonymous-poll.js';
 
 describe('Anonymous Poll', () => {
   let element;
