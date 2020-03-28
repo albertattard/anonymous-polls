@@ -63,8 +63,15 @@ export class AnonymousPoll extends LitElement {
 
       <p class="app-footer">
         Made with love and passion by
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/albertattard/anonymous-polls">Albert Attard</a>.
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/albertattard/anonymous-polls"
+          >Albert Attard</a
+        >.
       </p>
     `;
   }
 }
+
+customElements.define('anonymous-poll', AnonymousPoll);
