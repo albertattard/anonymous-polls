@@ -28,7 +28,8 @@
     "@open-wc/building-rollup": "^0.21.0",
     "rimraf": "^2.6.3",
     "rollup": "^1.15.4",
-    "es-dev-server": "^1.5.0"
+    "es-dev-server": "^1.5.0",
+    "sinon": "^9.0.1"
   },
   "eslintConfig": {
     "extends": [
@@ -52,11 +53,10 @@
   "name": "anonymous-poll",
   "version": "1.0.0",
   "description": "Anonymous Poll",
-  "author": "anonymous-poll",
+  "author": "Albert Attard",
   "license": "MIT",
   "dependencies": {
     "lit-element": "^2.0.1",
-    "lit-html": "^1.0.0",
-    "sinon": "^9.0.1"
+    "lit-html": "^1.0.0"
   }
 }
