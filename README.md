@@ -23,10 +23,10 @@ An [in-memory database](https://www.h2database.com/html/main.html) is used simpl
 
 Different technologies can be used to produce the same value.
 
-1. [backend-micronaut](backend-micronaut/README.md)
-1. [backend-quarkus](backend-quarkus/README.md) (*coming soon*)
-1. [backend-helidon](backend-helidon/README.md) (*coming soon*)
-1. [frontend-open-wc](frontend-open-wc/README.md)
+1. [backend-micronaut](backend-micronaut)
+1. [backend-quarkus](backend-quarkus) (*coming soon*)
+1. [backend-helidon](backend-helidon) (*coming soon*)
+1. [frontend-open-wc](frontend-open-wc)
 
 Hopefully this list will keep growing to include more technologies.
 
