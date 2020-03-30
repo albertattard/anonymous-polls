@@ -1,12 +1,12 @@
 import { css, html, LitElement } from 'lit-element';
 import { openWcLogo } from './open-wc-logo.js';
-import { PollGateway } from './poll-gateway.js';
+import { navigateToHome, HOME, CREATE } from './poll-routes.js';
 import './poll-router.js';
+import './home-pane.js';
 
 export class AnonymousPoll extends LitElement {
   static get properties() {
     return {
-      numberOfPolls: { type: String },
       route: { type: String },
     };
   }
@@ -36,7 +36,7 @@ export class AnonymousPoll extends LitElement {
       }
 
       .logo > svg {
-        margin-top: 36px;
+        margin-top: 24px;
         animation: app-logo-spin infinite 20s linear;
       }
 
@@ -68,55 +68,23 @@ export class AnonymousPoll extends LitElement {
     return 'home';
   }
 
-  static navigateTo(hash) {
-    window.location.hash = hash;
-  }
-
   constructor() {
     super();
-    this.numberOfPolls = 'Pending...';
     this.route = AnonymousPoll.routeFromHash();
-
-    /* TODO: Pass this as a parameter so that we can mock it for tests */
-    this.gateway = new PollGateway();
 
     window.onhashchange = () => {
       this.route = AnonymousPoll.routeFromHash();
     };
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.updateNumberOfPolls();
-  }
-
-  updateNumberOfPolls() {
-    this.gateway.count().then(count => {
-      if (count.error) {
-        this.numberOfPolls = 'Failed to retrieve the number of polls';
-      } else if (count.total === 0) {
-        this.numberOfPolls = 'No polls found!!';
-      } else {
-        this.numberOfPolls = `Number of polls ${count.total}`;
-      }
-    });
-  }
-
   render() {
     return html`
       <main>
-        <div class="logo">${openWcLogo}</div>
-        <h1>Anonymous Polls</h1>
-        <span class="coming-soon">Coming soon to a browser close to you</span>
-        <span class="count">${this.numberOfPolls}</span>
-
+        <div class="logo" @click=${navigateToHome}>${openWcLogo}</div>
         <poll-router active-route="${this.route}">
-          <div route="home">Home View</div>
-          <div route="create">Creat View</div>
+          <home-pane route=${HOME}></home-pane>
+          <div route=${CREATE}>Creat View</div>
         </poll-router>
-
-        <button @click=${() => AnonymousPoll.navigateTo('home')}>Home</button>
-        <button @click=${() => AnonymousPoll.navigateTo('create')}>Create</button>
       </main>
 
       <p class="app-footer">
