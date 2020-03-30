@@ -1,5 +1,8 @@
 import { html, LitElement } from 'lit-element';
 
+/**
+ * Based on https://github.com/hamedasemi/lit-element-router/blob/258c2451c36da8bdefaa81aa0d3c49f4f9e67355/lit-element-router.js#L110-L149
+ */
 export class PollRouter extends LitElement {
   static get properties() {
     return {
@@ -35,18 +38,10 @@ export class PollRouter extends LitElement {
     Array.from(this.querySelectorAll(`[route]`)).forEach(active => {
       active.style.display = 'none';
     });
-    Array.from(this.shadowRoot.querySelectorAll(`[route]`)).forEach(active => {
-      active.style.display = 'none';
-    });
     if (this.activeRoute) {
       Array.from(this.querySelectorAll(`[route~=${this.activeRoute}]`)).forEach(active => {
         active.style.display = '';
       });
-      Array.from(this.shadowRoot.querySelectorAll(`[route~=${this.activeRoute}]`)).forEach(
-        active => {
-          active.style.display = '';
-        },
-      );
     }
   }
   /* eslint-enable no-param-reassign */

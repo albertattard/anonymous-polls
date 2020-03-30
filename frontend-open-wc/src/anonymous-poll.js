@@ -60,8 +60,7 @@ export class AnonymousPoll extends LitElement {
     `;
   }
 
-  static routeFromHash() {
-    const { hash } = window.location;
+  static routeFromHash(hash = window.location.hash) {
     if (hash === '#create') {
       return 'create';
     }
@@ -82,17 +81,13 @@ export class AnonymousPoll extends LitElement {
     this.gateway = new PollGateway();
 
     window.onhashchange = () => {
-      this.locationHashChanged();
+      this.route = AnonymousPoll.routeFromHash();
     };
   }
 
   connectedCallback() {
     super.connectedCallback();
     this.updateNumberOfPolls();
-  }
-
-  locationHashChanged() {
-    this.route = AnonymousPoll.routeFromHash();
   }
 
   updateNumberOfPolls() {

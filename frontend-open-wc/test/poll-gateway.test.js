@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import { expect } from '@open-wc/testing';
 import { PollGateway } from '../src/poll-gateway.js';
 
-describe('Anonymous Poll', () => {
+describe('Polls Gateway', () => {
   it('should return the total received', async () => {
     const response = {
       status: 200,
