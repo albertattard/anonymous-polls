@@ -17,7 +17,7 @@ export class PollRouter extends LitElement {
 
   attributeChangedCallback(name, old, value) {
     super.attributeChangedCallback(name, old, value);
-    if(name === 'active-route'){
+    if (name === 'active-route') {
       this.outlet();
     }
   }
@@ -30,6 +30,7 @@ export class PollRouter extends LitElement {
     });
   }
 
+  /* eslint-disable no-param-reassign */
   outlet() {
     Array.from(this.querySelectorAll(`[route]`)).forEach(active => {
       active.style.display = 'none';
@@ -41,11 +42,14 @@ export class PollRouter extends LitElement {
       Array.from(this.querySelectorAll(`[route~=${this.activeRoute}]`)).forEach(active => {
         active.style.display = '';
       });
-      Array.from(this.shadowRoot.querySelectorAll(`[route~=${this.activeRoute}]`)).forEach(active => {
-        active.style.display = '';
-      });
+      Array.from(this.shadowRoot.querySelectorAll(`[route~=${this.activeRoute}]`)).forEach(
+        active => {
+          active.style.display = '';
+        },
+      );
     }
   }
+  /* eslint-enable no-param-reassign */
 
   render() {
     return html`
