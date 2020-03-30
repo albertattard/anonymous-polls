@@ -3,6 +3,7 @@ import { openWcLogo } from './open-wc-logo.js';
 import { navigateToHome, HOME, CREATE } from './poll-routes.js';
 import './poll-router.js';
 import './home-pane.js';
+import './create-pane.js';
 
 export class AnonymousPoll extends LitElement {
   static get properties() {
@@ -81,9 +82,10 @@ export class AnonymousPoll extends LitElement {
     return html`
       <main>
         <div class="logo" @click=${navigateToHome}>${openWcLogo}</div>
+
         <poll-router active-route="${this.route}">
           <home-pane route=${HOME}></home-pane>
-          <div route=${CREATE}>Creat View</div>
+          <create-pane route=${CREATE}></create-pane>
         </poll-router>
       </main>
 

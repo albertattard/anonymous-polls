@@ -37,8 +37,8 @@ export class HomePane extends LitElement {
   render() {
     return html`
       <h1>Anonymous Polls</h1>
-      <span class="count">${this.numberOfPolls}</span>
-      <button @click=${navigateToCreate}>Create</button>
+      <div class="count">${this.numberOfPolls}</div>
+      <button @click=${navigateToCreate}>Create a new anonymous poll</button>
     `;
   }
 }
