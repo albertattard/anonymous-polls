@@ -1,6 +1,6 @@
 # Anonymous Polls
 
-One of the challenges we faced in our team was, gathering of anonymous feedback, such as polls.  There are many applications available on the web but none were approved by either our company or our project.  Given that I am on [kurzarbeit](https://de.wikipedia.org/wiki/Kurzarbeit), decided to develop an anonymous poll application using new emerging technologies, such as (listed in no particular order)
+One of the challenges we faced in our team was, gathering of anonymous feedback, such as polls.  There are many applications available on the web but none were approved by either our company or our project.  Given that I am on [kurzarbeit](https://de.wikipedia.org/wiki/Kurzarbeit), decided to develop an anonymous poll application using new emerging technologies, such as (listed in no particular order):
 
 1. [Kotlin](https://kotlinlang.org/) - a cross-platform, statically typed, general-purpose programming language with type inference designed to interoperate fully with Java, and the JVM version of its standard library depends on the Java Class Library, but type inference allows its syntax to be more concise
 1. [Jetbrains Exposed](https://github.com/JetBrains/Exposed) - a lightweight SQL library written for Kotlin language. It does have two layers of database access: typesafe SQL wrapping DSL and lightweight data access objects
@@ -10,6 +10,7 @@ One of the challenges we faced in our team was, gathering of anonymous feedback,
 1. [Open WebComponents](https://open-wc.org/) - a community-effort, independent of any framework or company. We use mostly open-source tools and services
 1. [GraalVM](https://www.graalvm.org/) (*coming soon*) - a universal virtual machine for running applications written in JavaScript, Python, Ruby, R, JVM-based languages like Java, Scala, Groovy, Kotlin, Clojure, and LLVM-based languages such as C and C++
 1. [Gauge](https://docs.gauge.org/) (*work in progress*) - a free and open source test automation framework that takes the pain out of acceptance testing
+1. [Taiko](https://github.com/getgauge/taiko) (*work in progress*) - a free and open source browser automation tool built by the team behind [Gauge](https://docs.gauge.org/) from [ThoughtWorks](https://www.thoughtworks.com/).  Taiko is a [Node.js](https://nodejs.org/) library with a clear and concise API to automate [Chromium](https://www.chromium.org/) based browsers.
 
 While technology can make the project fun, the emphasis of this project is to produce anonymous polls.  No authentication is required, yet it provides the following features:
 
@@ -18,7 +19,7 @@ While technology can make the project fun, the emphasis of this project is to pr
 1. Invite others to participate in the poll
 1. Generate a summary while keeping it all anonymous
 
-An [in-memory database](https://www.h2database.com/html/main.html) is used simply to deal with concurrency through transactions.  The database exists only in memory and is disposed from once the service is restarted.
+An [in-memory database](https://www.h2database.com/) is used simply to deal with concurrency through transactions.  The database exists only in memory and is disposed from once the service is restarted.
 
 ## Sub-Projects
 
