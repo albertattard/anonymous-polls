@@ -4,7 +4,7 @@ import { navigateToHome } from './poll-routes.js';
 export class CreatePane extends LitElement {
   render() {
     return html`
-      <h1>Create a new Anonymous Polls</h1>
+      <h1>Create a new Anonymous Poll</h1>
       <button @click=${navigateToHome}>Home</button>
     `;
   }
