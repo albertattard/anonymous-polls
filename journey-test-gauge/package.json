@@ -1,0 +1,16 @@
+{
+  "name": "journey-test-gauge",
+  "version": "1.0.0",
+  "description": "Anonymous Polls Journey Test using Gauge and Taiko",
+  "scripts": {
+    "test": "gauge run specs/"
+  },
+  "dependencies": {
+    "@getgauge/cli": "latest",
+    "grpc": "^1.24.2",
+    "taiko": "latest"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
+  }
+}
