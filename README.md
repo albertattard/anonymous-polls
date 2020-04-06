@@ -8,6 +8,7 @@ One of the challenges we faced in our team was, gathering of anonymous feedback,
 1. [Quarkus](https://quarkus.io/) (*coming soon*) - a Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM, crafted from the best of breed Java libraries and standards
 1. [Helidon](https://helidon.io/) (*coming soon*) - a collection of Java libraries for writing microservices that run on a fast web core powered by Netty.
 1. [Open WebComponents](https://open-wc.org/) - a community-effort, independent of any framework or company. We use mostly open-source tools and services
+1. [Tailor](https://github.com/zalando/tailor) (*coming soon*) - a layout service that uses streams to compose a web page from fragment services.
 1. [GraalVM](https://www.graalvm.org/) (*coming soon*) - a universal virtual machine for running applications written in JavaScript, Python, Ruby, R, JVM-based languages like Java, Scala, Groovy, Kotlin, Clojure, and LLVM-based languages such as C and C++
 1. [Gauge](https://docs.gauge.org/) (*work in progress*) - a free and open source test automation framework that takes the pain out of acceptance testing
 1. [Taiko](https://github.com/getgauge/taiko) (*work in progress*) - a free and open source browser automation tool built by the team behind [Gauge](https://docs.gauge.org/) from [ThoughtWorks](https://www.thoughtworks.com/).  Taiko is a [Node.js](https://nodejs.org/) library with a clear and concise API to automate [Chromium](https://www.chromium.org/) based browsers.
