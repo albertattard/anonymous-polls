@@ -4,7 +4,7 @@
 
 1. We are not able to properly test Web Components/ShadowDOM with Taiko.
 
-    I've reached Scott Davis ([Website](https://thirstyhead.com/) | [LinkedIn](https://www.linkedin.com/in/scottdavis99/)) and he told me that this is a known issue within the [Taiko](https://gauge.org/gauge-taiko/) community: [https://github.com/getgauge/taiko/issues/952](https://github.com/getgauge/taiko/issues/952).
+    I've reached to Scott Davis ([Website](https://thirstyhead.com/) | [LinkedIn](https://www.linkedin.com/in/scottdavis99/)) and he told me that this is a known issue within the [Taiko](https://gauge.org/gauge-taiko/) community: [https://github.com/getgauge/taiko/issues/952](https://github.com/getgauge/taiko/issues/952).
 
     Scott also mentioned that [Puppeteer](https://github.com/puppeteer/puppeteer) struggles with the same issue: [https://github.com/puppeteer/puppeteer/issues/4171](https://github.com/puppeteer/puppeteer/issues/4171).  
 
