@@ -1,3 +1,15 @@
+# Anonymous Polls Journey tests with Gauge and Taiko
+
+## Pending Tasks
+
+1. We are not able to properly test Web Components/ShadowDOM with Taiko.
+
+    I've reached Scott Davis ([Website](https://thirstyhead.com/) | [LinkedIn](https://www.linkedin.com/in/scottdavis99/)) and he told me that this is a known issue within the [Taiko](https://gauge.org/gauge-taiko/) community: [https://github.com/getgauge/taiko/issues/952](https://github.com/getgauge/taiko/issues/952).
+
+    Scott also mentioned that [Puppeteer](https://github.com/puppeteer/puppeteer) struggles with the same issue: [https://github.com/puppeteer/puppeteer/issues/4171](https://github.com/puppeteer/puppeteer/issues/4171).  
+
+    Scott managed to hacked something together using `page.evaluateHandle` as shown at the bottom of this page: [https://github.com/puppeteer/puppeteer/issues/858](https://github.com/puppeteer/puppeteer/issues/858).
+
 ## Setup
 
 1. Install NPM, if not already installed
@@ -54,15 +66,15 @@
     code: 'MODULE_NOT_FOUND'
     }
     Error ----------------------------------
-    
+
     [Gauge]
     Failed to start gauge API: Timed out connecting to 127.0.0.1:55268
-    
+
     Get Support ----------------------------
     	Docs:          https://docs.gauge.org
     	Bugs:          https://github.com/getgauge/gauge/issues
     	Chat:          https://spectrum.chat/gauge
-    
+
     Your Environment Information -----------
     	darwin, 1.0.8
     	html-report (4.0.8), java (0.7.3), js (2.3.5), screenshot (0.0.1)

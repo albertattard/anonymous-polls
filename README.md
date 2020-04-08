@@ -3,6 +3,8 @@
 One of the challenges we faced in our team was, gathering of anonymous feedback, such as polls.  There are many applications available on the web but none were approved by either our company or our project.  Given that I am on [kurzarbeit](https://de.wikipedia.org/wiki/Kurzarbeit), decided to develop an anonymous poll application using new emerging technologies, such as (listed in no particular order):
 
 1. [Kotlin](https://kotlinlang.org/) - a cross-platform, statically typed, general-purpose programming language with type inference designed to interoperate fully with Java, and the JVM version of its standard library depends on the Java Class Library, but type inference allows its syntax to be more concise
+1. [Rust](https://www.rust-lang.org/) (*coming soon*) - a language empowering everyone
+to build reliable and efficient software.
 1. [Jetbrains Exposed](https://github.com/JetBrains/Exposed) - a lightweight SQL library written for Kotlin language. It does have two layers of database access: typesafe SQL wrapping DSL and lightweight data access objects
 1. [Micronaut](https://micronaut.io/) - a modern, JVM-based, full-stack framework for building modular, easily testable microservice and serverless applications.
 1. [Quarkus](https://quarkus.io/) (*coming soon*) - a Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM, crafted from the best of breed Java libraries and standards
@@ -30,11 +32,19 @@ Different technologies can be used to produce the same value.
 1. [backend-quarkus](backend-quarkus) (*coming soon*)
 1. [backend-helidon](backend-helidon) (*coming soon*)
 1. [frontend-open-wc](frontend-open-wc)
-1. [journey-test-gauge](journey-test-gauge) (*work in progress*)
+1. [journey-test-gauge-taiko](journey-test-gauge-taiko) (*work in progress*)
 
 Hopefully this list will keep growing to include more technologies.
 
 ## Run Locally
+
+All commands shown next are to be executed from within the `anonymous-polls` folder
+
+1. Run tests for all projects
+
+    ```bash
+    $ ./gradlew test
+    ```
 
 1. Build both frontend and backend
 
@@ -47,6 +57,8 @@ Hopefully this list will keep growing to include more technologies.
     ```bash
     $ java -jar backend-micronaut/build/libs/backend-micronaut-1.0-all.jar
     ```
+
+    This will start the [backend-micronaut](backend-micronaut) together with the [frontend-open-wc](frontend-open-wc).
 
 1. Access the application [http://localhost:8080/](http://localhost:8080/)
 
