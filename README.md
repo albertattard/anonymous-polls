@@ -14,6 +14,13 @@ to build reliable and efficient software.
 1. [GraalVM](https://www.graalvm.org/) (*coming soon*) - a universal virtual machine for running applications written in JavaScript, Python, Ruby, R, JVM-based languages like Java, Scala, Groovy, Kotlin, Clojure, and LLVM-based languages such as C and C++
 1. [Gauge](https://docs.gauge.org/) (*work in progress*) - a free and open source test automation framework that takes the pain out of acceptance testing
 1. [Taiko](https://github.com/getgauge/taiko) (*work in progress*) - a free and open source browser automation tool built by the team behind [Gauge](https://docs.gauge.org/) from [ThoughtWorks](https://www.thoughtworks.com/).  Taiko is a [Node.js](https://nodejs.org/) library with a clear and concise API to automate [Chromium](https://www.chromium.org/) based browsers.
+1. [JDepend](https://github.com/clarkware/jdepend) (*coming soon*) - traverses Java class and source file directories and generates design quality metrics for each Java package.  JDepend allows you to automatically measure the quality of a design in terms of its extensibility, reusability, and maintainability to effectively manage and control package dependencies.
+1. [ArchUnit](https://www.archunit.org/) (*coming soon*) - a free, simple and extensible library for checking the architecture of your Java code using any plain Java unit test framework. That is, ArchUnit can check dependencies between packages and classes, layers and slices, check for cyclic dependencies and more. It does so by analyzing given Java bytecode, importing all classes into a Java code structure.
+1. [pitest](https://pitest.org/) (*coming soon*) - a mutation testing system, providing gold standard test coverage for Java and the jvm.  It's fast, scalable and integrates with modern test and build tooling.  **This does not work well with Kotlin**.
+
+### In the Horizon
+
+1. [Lerna](https://github.com/lerna/lerna)
 
 While technology can make the project fun, the emphasis of this project is to produce anonymous polls.  No authentication is required, yet it provides the following features:
 
